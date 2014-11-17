@@ -8,11 +8,16 @@
 </head>
 <body>
 	<h1>Log in</h1>
-	<form action="/login" method="POST">
+	<form action="/JSFWeb/login" method="POST">
 		<label for="username">Username</label>
-		<input type="text" name="username"></name>
+		<input type="text" name="username" value="<%= request.getAttribute("username") %>"></input>
 		<br />
-		<submit name="submitbutton">Login</submit>
+		<label for="password">Password</label>
+		<input type="password" name="password"></input>
+		<br />
+		<input type="submit" name="submitbutton" value="Login" />
+		<br />
+		<%= request.getAttribute("message") %>
 	</form>
 </body>
 </html>
