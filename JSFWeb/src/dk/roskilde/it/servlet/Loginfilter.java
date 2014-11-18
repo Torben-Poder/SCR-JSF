@@ -44,6 +44,7 @@ public class Loginfilter implements Filter {
 		if (((HttpServletRequest) request).getSession().getAttribute("userbean") == null) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login");
 			requestDispatcher.forward(request, response);
+			return;
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
