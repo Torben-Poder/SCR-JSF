@@ -13,11 +13,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import dk.roskilde.it.beans.UserBean;
+
 /**
  * Servlet Filter implementation class Loginfilter
  */
 @WebFilter(dispatcherTypes = {DispatcherType.REQUEST }
-					, urlPatterns = { "/index" })
+					, urlPatterns = { "/index", "/login" })
 public class Loginfilter implements Filter {
 
     /**
@@ -41,7 +43,12 @@ public class Loginfilter implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 
-		if (((HttpServletRequest) request).getSession().getAttribute("userbean") == null) {
+		UserBean user = (UserBean) ((HttpServletRequest) request).getSession().getAttribute("userbean");
+		if (user == null) {
+			user = new UserBean();
+	    	((HttpServletRequest) request).getSession().setAttribute("userbean", user);
+		}
+		if (!user.isIsloggedin()) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login");
 			requestDispatcher.forward(request, response);
 			return;

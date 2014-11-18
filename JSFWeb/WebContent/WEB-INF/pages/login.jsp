@@ -17,7 +17,7 @@
 		<br />
 		<input type="submit" name="submitbutton" value="Login" />
 		<br />
-		<%= request.getAttribute("message") %>
+		${message }
 	</form>
 </body>
 </html>

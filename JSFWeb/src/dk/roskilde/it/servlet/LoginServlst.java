@@ -21,7 +21,8 @@ public class LoginServlst extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().setAttribute("userbean", null);
+		UserBean user = (UserBean) ( request.getSession().getAttribute("userbean"));
+		user.setIsloggedin(false);
 		request.setAttribute("message", "");
 		request.setAttribute("username", "");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
@@ -29,16 +30,15 @@ public class LoginServlst extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserBean user = (UserBean) ((HttpServletRequest) request).getSession().getAttribute("userbean");
 		request.setAttribute("message", "");
-		String username =request.getParameter("username");
+		user.setUsername(request.getParameter("username") );
 		String password =request.getParameter("password");
-		if (username.equals("h") && password.equals("h")) {
-			request.getSession().setAttribute("isloggedin", true);
-			request.getSession().setAttribute("userbean", new UserBean(username));
+		if (user.getUsername().equals("h") && password.equals("h")) {
+			user.setIsloggedin(true);
 			response.sendRedirect("/JSFWeb/index");
 		} else {
 			request.setAttribute("message", "wrong login");
-			request.setAttribute("username", username);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
 			requestDispatcher.forward(request, response);
 		}
