@@ -23,15 +23,12 @@ public class LoginServlst extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserBean user = (UserBean) ( request.getSession().getAttribute("userbean"));
 		user.setIsloggedin(false);
-		request.setAttribute("message", "");
-		request.setAttribute("username", "");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
 		requestDispatcher.forward(request, response);
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserBean user = (UserBean) ((HttpServletRequest) request).getSession().getAttribute("userbean");
-		request.setAttribute("message", "");
 		user.setUsername(request.getParameter("username") );
 		String password =request.getParameter("password");
 		if (user.getUsername().equals("h") && password.equals("h")) {

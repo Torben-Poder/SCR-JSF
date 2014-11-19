@@ -17,7 +17,12 @@
 		<br />
 		<input type="submit" name="submitbutton" value="Login" />
 		<br />
+		<c:if test="${null ne message}">
+		<h3>
 		${message }
+		</h3>
+		</c:if>
+		
 	</form>
 </body>
 </html>
