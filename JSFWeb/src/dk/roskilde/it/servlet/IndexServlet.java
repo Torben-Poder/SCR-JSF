@@ -31,15 +31,16 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ItemBean itembean = (ItemBean) request.getSession().getAttribute("items");
+		ItemBean itembean = (ItemBean) request.getAttribute("items");
 		if (itembean == null) {
 			itembean = new ItemBean(new ArrayList<>(3));
-			
+			itembean.add(new Item("World of Warcraft", 300, false));
+			itembean.add(new Item("Minecraft", 100, true));
+			itembean.add(new Item("Diablo 3", 200, false));
+			request.setAttribute("items", itembean);			
 		}
-		itembean.add(new Item("World of Warcraft", 300, false));
-		itembean.add(new Item("Minecraft", 100, true));
-		itembean.add(new Item("Diablo 3", 200, false));
-		request.getSession().setAttribute("items", itembean);
+
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/index.jsp");
 		requestDispatcher.forward(request, response);
 	}
