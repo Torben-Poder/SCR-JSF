@@ -7,4 +7,8 @@ public interface Membership {
 	List<User> getUsersInGroup(Group group);
 	
 	List<Group> getGroupsForUser(User user);
+	
+	boolean addUserToGroup(User user, Group group);
+
+	boolean remuveUserFromGroup(User user, Group group);
 }

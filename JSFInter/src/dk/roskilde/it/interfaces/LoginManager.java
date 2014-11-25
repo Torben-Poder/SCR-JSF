@@ -1,6 +1,6 @@
 package dk.roskilde.it.interfaces;
 
-public interface Login {
+public interface LoginManager {
 
 	boolean login(User user);
 	
