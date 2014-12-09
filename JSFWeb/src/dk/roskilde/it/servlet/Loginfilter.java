@@ -6,20 +6,20 @@ import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import dk.roskilde.it.beans.UserBean;
+import dk.roskilde.it.interfaces.AccesManager;
+import dk.roskilde.it.interfaces.User;
 
 /**
  * Servlet Filter implementation class Loginfilter
  */
 @WebFilter(dispatcherTypes = {DispatcherType.REQUEST }
-					, urlPatterns = { "/index", "/login" })
+					, urlPatterns = { "/user/*", "/admin/*" })
 public class Loginfilter implements Filter {
 
     /**
@@ -43,16 +43,18 @@ public class Loginfilter implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 
-		UserBean user = (UserBean) ((HttpServletRequest) request).getSession().getAttribute("userbean");
+		HttpServletRequest hreq = (HttpServletRequest) request;
+		AccesManager am = (AccesManager) hreq.getSession().getServletContext().getAttribute("accesmanager");
+		User user = (User) ((HttpServletRequest) request).getSession().getAttribute("userbean");
 		if (user == null) {
-			user = new UserBean();
+			user = new User();
 	    	((HttpServletRequest) request).getSession().setAttribute("userbean", user);
 		}
-		if (!user.isIsloggedin()) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login");
-			requestDispatcher.forward(request, response);
-			return;
-		}
+//		if (!user.isIsloggedin()) {
+//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login");
+//			requestDispatcher.forward(request, response);
+//			return;
+//		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}

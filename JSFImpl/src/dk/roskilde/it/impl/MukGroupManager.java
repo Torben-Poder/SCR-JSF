@@ -16,6 +16,9 @@ class MukGroupManager implements GroupManager {
 
 	@Override
 	public boolean addGroup(Group group) {
+		if (grouplist.contains(group)) {
+			return false;
+		}
 		return grouplist.add(group);
 	}
 

@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dk.roskilde.it.beans.Item;
-import dk.roskilde.it.beans.ItemBean;
+import dk.roskilde.it.impl.MokItemManager;
+import dk.roskilde.it.interfaces.Item;
+import dk.roskilde.it.interfaces.ItemManager;
 
 /**
  * Servlet implementation class IndexServlet
@@ -31,16 +32,7 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ItemBean itembean = (ItemBean) request.getAttribute("items");
-		if (itembean == null) {
-			itembean = new ItemBean(new ArrayList<>(3));
-			itembean.add(new Item("World of Warcraft", 300, false));
-			itembean.add(new Item("Minecraft", 100, true));
-			itembean.add(new Item("Diablo 3", 200, false));
-			request.setAttribute("items", itembean);			
-		}
-
-		
+		ItemManager im = (ItemManager) getServletContext().getAttribute("items");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/index.jsp");
 		requestDispatcher.forward(request, response);
 	}

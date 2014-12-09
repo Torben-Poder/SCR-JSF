@@ -3,6 +3,8 @@
 	<name>JSFWeb</name>
 	<comment></comment>
 	<projects>
+		<project>JSFImpl</project>
+		<project>JSFInter</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -22,6 +24,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>tern.eclipse.ide.core.ternBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

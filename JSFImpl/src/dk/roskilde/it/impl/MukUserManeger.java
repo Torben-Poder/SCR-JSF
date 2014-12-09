@@ -37,6 +37,9 @@ class MukUserManeger implements UserManager {
 
 	@Override
 	public boolean CreateUser(User user) {
+		if (userlist.contains(user)) {
+			return false;
+		}
 		return userlist.add(user);
 	}
 

@@ -1,6 +1,7 @@
 package dk.roskilde.it.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import dk.roskilde.it.interfaces.AccesManager;
 import dk.roskilde.it.interfaces.Group;
@@ -16,6 +17,14 @@ public class Acces implements AccesManager {
 	GroupManager groupmanager = new MukGroupManager();
 	Membership membership = new MukMembership();
 	LoginManager loginlanager = new MukLoginManager();
+
+	public Acces(){}
+	public Acces(UserManager usermaneger, GroupManager groupmanager, Membership membership, LoginManager loginlanager) {
+		this.usermaneger = usermaneger;
+		this.groupmanager = groupmanager;
+		this.membership = membership;
+		this.loginlanager = loginlanager;
+	}
 
 	@Override
 	public List<Group> getGroups() {
@@ -53,7 +62,7 @@ public class Acces implements AccesManager {
 	}
 
 	@Override
-	public List<Group> getGroupsForUser(User user) {
+	public Set<Group> getGroupsForUser(User user) {
 		return membership.getGroupsForUser(user);
 	}
 

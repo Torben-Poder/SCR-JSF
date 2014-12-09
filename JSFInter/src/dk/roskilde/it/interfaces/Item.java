@@ -1,4 +1,4 @@
-package dk.roskilde.it.beans;
+package dk.roskilde.it.interfaces;
 
 public class Item {
 	private String name;

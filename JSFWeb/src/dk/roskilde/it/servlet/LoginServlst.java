@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dk.roskilde.it.beans.UserBean;
+import dk.roskilde.it.interfaces.AccesManager;
+import dk.roskilde.it.interfaces.User;
 
 @WebServlet("/login")
 public class LoginServlst extends HttpServlet {
@@ -21,23 +22,37 @@ public class LoginServlst extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserBean user = (UserBean) ( request.getSession().getAttribute("userbean"));
-		user.setIsloggedin(false);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
 		requestDispatcher.forward(request, response);
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserBean user = (UserBean) ((HttpServletRequest) request).getSession().getAttribute("userbean");
-		user.setUsername(request.getParameter("username") );
-		String password =request.getParameter("password");
-		if (user.getUsername().equals("h") && password.equals("h")) {
-			user.setIsloggedin(true);
-			response.sendRedirect("/JSFWeb/index");
-		} else {
-			request.setAttribute("message", "wrong login");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if (username.isEmpty() || password.isEmpty()) {
+			request.setAttribute("message", "udfyld felterne");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
 			requestDispatcher.forward(request, response);
+		} else {
+			AccesManager am = (AccesManager) this.getServletContext().getAttribute("accesmanager");
+			User user = am.getUser(username);
+			if (user == null) {
+				request.setAttribute("message", "forkert brugernavn");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+				requestDispatcher.forward(request, response);
+			} else {
+				if (!user.getPassword().equals(password)) {
+					request.setAttribute("message", "forkert password");
+					request.getSession().setAttribute("userbean", user);
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+					requestDispatcher.forward(request, response);
+				} else {
+					request.getSession().setAttribute("userbean", user);
+					response.sendRedirect("/JSFWeb/index");
+				}
+			}
 		}
+		
 	}
 }

@@ -8,9 +8,10 @@
 </head>
 <body>
 	<h1>Log in</h1>
+	${username}
 	<form action="/JSFWeb/login" method="POST">
 		<label for="username">Username</label>
-		<input type="text" name="username" value="${userbean.username}"></input>
+		<input type="text" name="username" value="${username}"></input>
 		<br />
 		<label for="password">Password</label>
 		<input type="password" name="password"></input>

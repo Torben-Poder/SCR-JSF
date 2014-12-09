@@ -1,4 +1,3 @@
-<%@page import="dk.roskilde.it.beans.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -10,13 +9,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
+
 <body>
-  <h1>Hallow 
-  ${userbean.username}
+  <c:if test="${userbean.username ne null}">
+    <h1>Hallow 
+    ${userbean.username}
  </h1>
- <m:Hallow >
- <h3>Henrik</h3>
- </m:Hallow>
+ </c:if>
 <c:choose>
   <c:when test="${fn:length(items.items) eq 0 }">
     <span>ingen produktor</span>
